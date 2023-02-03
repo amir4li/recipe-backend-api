@@ -7,14 +7,30 @@ const ErrorResponse = require("../utils/errorResponse");
 // @route     GET /api/v1/recipes
 // @access    Public
 exports.getAllRecipes = asyncHandler(async (req, res)=> {
-    // BUILD QUERY
-    console.log(req.query)
-    const query = Recipe.find(req.query);
+    // Buil query
+    const query = Recipe.find();
 
-    // EXECUTE QUERY
+    // Execute query
     const recipes = await query;
 
-    // SEND RESPONSE
+    console.log("Data sent successfully");
+    res.status(200).json({
+        status: "success",           
+        results: recipes.length,
+        data: recipes
+    });
+});
+
+// @desc      Get all recipes by searching
+// @route     GET /api/v1/recipes/search
+// @access    Public
+exports.getSearchRecipes = asyncHandler(async (req, res)=> {
+    // Buil query
+    const query = Recipe.find({ $text: { $search: req.query.name } } );
+
+    // Execute query
+    const recipes = await query;
+
     console.log("Data sent successfully");
     res.status(200).json({
         status: "success",           

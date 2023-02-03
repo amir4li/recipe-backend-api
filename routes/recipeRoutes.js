@@ -5,12 +5,15 @@ const { protect } = require('../middlewares/authMiddleware');
 const router = express.Router();
 
 
-router.route("/")
+router.route("")
     .get(recipeController.getAllRecipes)
     .post(protect, recipeController.createRecipe);
 
 router.route("/user-recipes")
     .get(protect, recipeController.getUserRecipes);
+
+router.route("/search")
+    .get(recipeController.getSearchRecipes);
 
 router.route("/:id")
     .get(recipeController.getRecipe)
